@@ -4,14 +4,14 @@ platforms: java
 author: alvadb
 ---
 
-#Getting Started with Documentdb - Create Document DB With Eventual Consistency - in Java #
+## Getting Started with Documentdb - Create Document DB With Eventual Consistency - in Java ##
 
 
-  Azure DocumentDB sample for high availability.
-   - Create a DocumentDB configured with eventual consistency
-   - Get the credentials for the DocumentDB
-   - add collection to the DocumentDB
-   - Delete the DocumentDB.
+Azure DocumentDB sample for high availability.
+  - Create a DocumentDB configured with eventual consistency
+  - Get the credentials for the DocumentDB
+  - Add collection to the DocumentDB
+  - Delete the DocumentDB.
  
 
 ## Running this Sample ##
@@ -28,7 +28,7 @@ Set the environment variable `AZURE_AUTH_LOCATION` with the full path for an aut
 
 ## More information ##
 
-[http://azure.com/java] (http://azure.com/java)
+[http://azure.com/java](http://azure.com/java)
 
 If you don't have a Microsoft Azure subscription you can get a FREE trial account [here](http://go.microsoft.com/fwlink/?LinkId=330212)
 
