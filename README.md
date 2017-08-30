@@ -1,17 +1,17 @@
 ---
-services: Documentdb
+services: Cosmosdb
 platforms: java
 author: alvadb
 ---
 
-## Getting Started with Documentdb - Create Document DB With Eventual Consistency - in Java ##
+## Getting Started with Cosmosdb - Create Cosmos DB With Eventual Consistency - in Java ##
 
 
-Azure DocumentDB sample for high availability.
-  - Create a DocumentDB configured with eventual consistency
-  - Get the credentials for the DocumentDB
-  - Add collection to the DocumentDB
-  - Delete the DocumentDB.
+  Azure CosmosDB sample for high availability.
+   - Create a CosmosDB configured with eventual consistency
+   - Get the credentials for the CosmosDB
+   - add collection to the CosmosDB
+   - Delete the CosmosDB.
  
 
 ## Running this Sample ##

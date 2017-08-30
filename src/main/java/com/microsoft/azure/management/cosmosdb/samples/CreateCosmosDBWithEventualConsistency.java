@@ -4,7 +4,7 @@
  * license information.
  */
 
-package com.microsoft.azure.management.documentdb.samples;
+package com.microsoft.azure.management.cosmosdb.samples;
 
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
 import com.microsoft.azure.management.Azure;
@@ -15,9 +15,9 @@ import com.microsoft.azure.documentdb.Database;
 import com.microsoft.azure.documentdb.DocumentCollection;
 import com.microsoft.azure.documentdb.DocumentClientException;
 import com.microsoft.azure.documentdb.RequestOptions;
-import com.microsoft.azure.management.documentdb.DatabaseAccountKind;
-import com.microsoft.azure.management.documentdb.DocumentDBAccount;
-import com.microsoft.azure.management.documentdb.implementation.DatabaseAccountListKeysResult;
+import com.microsoft.azure.management.cosmosdb.CosmosDBAccount;
+import com.microsoft.azure.management.cosmosdb.DatabaseAccountKind;
+import com.microsoft.azure.management.cosmosdb.implementation.DatabaseAccountListKeysResult;
 import com.microsoft.azure.management.resources.fluentcore.arm.Region;
 import com.microsoft.azure.management.resources.fluentcore.utils.SdkContext;
 import com.microsoft.azure.management.samples.Utils;
@@ -26,13 +26,13 @@ import com.microsoft.rest.LogLevel;
 import java.io.File;
 
 /**
- * Azure DocumentDB sample for high availability.
- *  - Create a DocumentDB configured with eventual consistency
- *  - Get the credentials for the DocumentDB
- *  - add collection to the DocumentDB
- *  - Delete the DocumentDB.
+ * Azure CosmosDB sample for high availability.
+ *  - Create a CosmosDB configured with eventual consistency
+ *  - Get the credentials for the CosmosDB
+ *  - add collection to the CosmosDB
+ *  - Delete the CosmosDB.
  */
-public final class CreateDocumentDBWithEventualConsistency {
+public final class CreateCosmosDBWithEventualConsistency {
     static final String DATABASE_ID = "TestDB";
     static final String COLLECTION_ID = "TestCollection";
 
@@ -48,10 +48,10 @@ public final class CreateDocumentDBWithEventualConsistency {
 
         try {
             //============================================================
-            // Create a DocumentDB.
+            // Create a CosmosDB.
 
-            System.out.println("Creating a DocumentDB...");
-            DocumentDBAccount documentDBAccount = azure.documentDBs().define(docDBName)
+            System.out.println("Creating a CosmosDB...");
+            CosmosDBAccount cosmosDBAccount = azure.cosmosDBAccounts().define(docDBName)
                     .withRegion(Region.US_WEST)
                     .withNewResourceGroup(rgName)
                     .withKind(DatabaseAccountKind.GLOBAL_DOCUMENT_DB)
@@ -60,28 +60,28 @@ public final class CreateDocumentDBWithEventualConsistency {
                     .withReadReplication(Region.US_CENTRAL)
                     .create();
 
-            System.out.println("Created DocumentDB");
-            Utils.print(documentDBAccount);
+            System.out.println("Created CosmosDB");
+            Utils.print(cosmosDBAccount);
 
             //============================================================
-            // Get credentials for the DocumentDB.
+            // Get credentials for the CosmosDB.
 
-            System.out.println("Get credentials for the DocumentDB");
-            DatabaseAccountListKeysResult databaseAccountListKeysResult = documentDBAccount.listKeys();
+            System.out.println("Get credentials for the CosmosDB");
+            DatabaseAccountListKeysResult databaseAccountListKeysResult = cosmosDBAccount.listKeys();
             String masterKey = databaseAccountListKeysResult.primaryMasterKey();
-            String endPoint = documentDBAccount.documentEndpoint();
+            String endPoint = cosmosDBAccount.documentEndpoint();
 
             //============================================================
-            // Connect to DocumentDB and add a collection
+            // Connect to CosmosDB and add a collection
 
             System.out.println("Connecting and adding collection");
             createDBAndAddCollection(masterKey, endPoint);
 
             //============================================================
-            // Delete DocumentDB
-            System.out.println("Deleting the DocumentDB");
-            azure.documentDBs().deleteById(documentDBAccount.id());
-            System.out.println("Deleted the DocumentDB");
+            // Delete CosmosDB
+            System.out.println("Deleting the CosmosDB");
+            azure.cosmosDBAccounts().deleteById(cosmosDBAccount.id());
+            System.out.println("Deleted the CosmosDB");
 
             return true;
         } catch (Exception e) {
@@ -161,6 +161,6 @@ public final class CreateDocumentDBWithEventualConsistency {
         }
     }
 
-    private CreateDocumentDBWithEventualConsistency() {
+    private CreateCosmosDBWithEventualConsistency() {
     }
 }
