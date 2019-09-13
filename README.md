@@ -4,9 +4,8 @@ languages:
 - java
 products:
 - azure
-extensions:
-- services: Cosmosdb
-- platforms: java
+description: "Getting Started with Cosmosdb - Create Cosmos DB With Eventual Consistency - in Java"
+urlFragment: cosmosdb-java-create-documentdb-and-configure-for-eventual-consistency
 ---
 
 # Getting Started with Cosmosdb - Create Cosmos DB With Eventual Consistency - in Java #
