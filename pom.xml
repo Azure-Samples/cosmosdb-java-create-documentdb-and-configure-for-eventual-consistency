@@ -61,9 +61,9 @@
       <version>3.3</version>
     </dependency>
     <dependency>
-      <groupId>com.microsoft.azure</groupId>
-      <artifactId>azure-documentdb</artifactId>
-      <version>1.9.4</version>
+      <groupId>com.azure</groupId>
+      <artifactId>azure-cosmos</artifactId>
+      <version>4.0.0-preview.1</version>
     </dependency>
   </dependencies>
 </project>
