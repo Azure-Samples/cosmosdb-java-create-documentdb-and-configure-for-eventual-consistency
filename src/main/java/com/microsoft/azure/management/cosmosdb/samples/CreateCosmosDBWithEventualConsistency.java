@@ -111,7 +111,8 @@ public final class CreateCosmosDBWithEventualConsistency {
             CosmosClient cosmosClient = new CosmosClientBuilder()
                 .endpoint(endPoint)
                 .key(masterKey)
-                .consistencyLevel(ConsistencyLevel.SESSION).buildClient();
+                .consistencyLevel(ConsistencyLevel.SESSION)
+                .buildClient();
 
 
             cosmosClient.createDatabase(DATABASE_ID);
