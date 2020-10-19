@@ -6,16 +6,16 @@
 
 package com.microsoft.azure.management.cosmosdb.samples;
 
+import com.azure.cosmos.ConsistencyLevel;
+import com.azure.cosmos.CosmosClient;
+import com.azure.cosmos.CosmosClientBuilder;
+import com.azure.cosmos.CosmosDatabase;
+import com.azure.cosmos.CosmosException;
+import com.azure.cosmos.models.CosmosContainerProperties;
+import com.azure.cosmos.models.ThroughputProperties;
 import com.microsoft.azure.CloudException;
 import com.microsoft.azure.credentials.ApplicationTokenCredentials;
 import com.microsoft.azure.management.Azure;
-import com.microsoft.azure.documentdb.DocumentClient;
-import com.microsoft.azure.documentdb.ConsistencyLevel;
-import com.microsoft.azure.documentdb.ConnectionPolicy;
-import com.microsoft.azure.documentdb.Database;
-import com.microsoft.azure.documentdb.DocumentCollection;
-import com.microsoft.azure.documentdb.DocumentClientException;
-import com.microsoft.azure.documentdb.RequestOptions;
 import com.microsoft.azure.management.cosmosdb.CosmosDBAccount;
 import com.microsoft.azure.management.cosmosdb.DatabaseAccountKind;
 import com.microsoft.azure.management.cosmosdb.DatabaseAccountListKeysResult;
@@ -30,12 +30,12 @@ import java.io.File;
  * Azure CosmosDB sample for high availability.
  *  - Create a CosmosDB configured with eventual consistency
  *  - Get the credentials for the CosmosDB
- *  - add collection to the CosmosDB
+ *  - add container to the CosmosDB
  *  - Delete the CosmosDB.
  */
 public final class CreateCosmosDBWithEventualConsistency {
     static final String DATABASE_ID = "TestDB";
-    static final String COLLECTION_ID = "TestCollection";
+    static final String CONTAINER_ID = "TestContainer";
 
     /**
      * Main function which runs the actual sample.
@@ -73,10 +73,10 @@ public final class CreateCosmosDBWithEventualConsistency {
             String endPoint = cosmosDBAccount.documentEndpoint();
 
             //============================================================
-            // Connect to CosmosDB and add a collection
+            // Connect to CosmosDB and add a container
 
-            System.out.println("Connecting and adding collection");
-            createDBAndAddCollection(masterKey, endPoint);
+            System.out.println("Connecting and adding container");
+            createDBAndAddContainer(masterKey, endPoint);
 
             //============================================================
             // Delete CosmosDB
@@ -106,34 +106,29 @@ public final class CreateCosmosDBWithEventualConsistency {
         return false;
     }
 
-    private static void createDBAndAddCollection(String masterKey, String endPoint) throws DocumentClientException {
+    private static void createDBAndAddContainer(String masterKey, String endPoint) throws CosmosException {
         try {
-            DocumentClient documentClient = new DocumentClient(endPoint,
-                    masterKey, ConnectionPolicy.GetDefault(),
-                    ConsistencyLevel.Session);
+            CosmosClient cosmosClient = new CosmosClientBuilder()
+                .endpoint(endPoint)
+                .key(masterKey)
+                .consistencyLevel(ConsistencyLevel.SESSION)
+                .buildClient();
 
-            // Define a new database using the id above.
-            Database myDatabase = new Database();
-            myDatabase.setId(DATABASE_ID);
 
-            myDatabase = documentClient.createDatabase(myDatabase, null)
-                    .getResource();
+            cosmosClient.createDatabase(DATABASE_ID);
+
+            CosmosDatabase cosmosDatabase = cosmosClient.getDatabase(DATABASE_ID);
 
             System.out.println("Created a new database:");
-            System.out.println(myDatabase.toString());
+            System.out.println(cosmosDatabase.getId());
 
-            // Define a new collection using the id above.
-            DocumentCollection myCollection = new DocumentCollection();
-            myCollection.setId(COLLECTION_ID);
+            // Set the provisioned throughput for this container to be 1000 RUs.
+            Integer throughput = 1000;
+            ThroughputProperties properties = ThroughputProperties.createManualThroughput(throughput);
 
-            // Set the provisioned throughput for this collection to be 1000 RUs.
-            RequestOptions requestOptions = new RequestOptions();
-            requestOptions.setOfferThroughput(1000);
-
-            // Create a new collection.
-            myCollection = documentClient.createCollection(
-                    "dbs/" + DATABASE_ID, myCollection, requestOptions)
-                    .getResource();
+            // Create a new container.
+            CosmosContainerProperties containerProperties = new CosmosContainerProperties(CONTAINER_ID, "/id");
+            cosmosDatabase.createContainerIfNotExists(containerProperties, properties);
         } catch (Exception ex) {
             throw ex;
         }
