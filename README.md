@@ -4,18 +4,18 @@ languages:
 - java
 products:
 - azure
-description: "Azure CosmosDB sample for high availability."
+description: "Azure Cosmos DB sample for high availability."
 urlFragment: cosmosdb-java-create-documentdb-and-configure-for-eventual-consistency
 ---
 
 # Create Cosmos DB With Eventual Consistency (Java)
 
 
-  Azure CosmosDB sample for high availability.
-   - Create a CosmosDB configured with eventual consistency
-   - Get the credentials for the CosmosDB
-   - add collection to the CosmosDB
-   - Delete the CosmosDB.
+  Azure Cosmos DB sample for high availability.
+   - Create a Cosmos DB configured with eventual consistency
+   - Get the credentials for the Cosmos DB
+   - add collection to the Cosmos DB
+   - Delete the Cosmos DB.
  
 
 ## Running this Sample ##
